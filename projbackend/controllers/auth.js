@@ -77,3 +77,33 @@ exports.signout=(req,res)=>{
         message:"User signed out successfully"
     })
 }
+
+
+//protected routes
+//even this is a middleware but since its coming from express jwt we dont need a next
+
+exports.isSignedIn= expressjwt({    
+    secret:process.env.SECRET,
+    userProperty:"auth" //auth adds user id to req body = to one in signin route
+});
+
+
+//custom middlewares
+
+exports.isAuthenticated=(req,res,next)=>{
+    let checker = req.profile && req.auth && req.profile._id==req.auth._id;
+    if(!checker){
+        return res.status(403).json({
+            error: "ACCES DENIED"
+        })
+    }   
+    next();
+}
+
+exports.isAdmin=(req,res,next)=>{
+    if(req.profile.role===0){
+        error:"Your not admin"
+    }
+    next();
+    
+}
