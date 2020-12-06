@@ -10,7 +10,7 @@ require('dotenv').config();
 //My routes
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
-
+const categoryRoutes = require("./routes/category")
 
 
 //DB CONNECTION
@@ -36,6 +36,7 @@ app.use(cookieParser());
 //My Routes
 app.use("/api", authRoutes);
 app.use("/api",userRoutes);
+app.use("/api",categoryRoutes);
 
 
 
